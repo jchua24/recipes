@@ -1,4 +1,4 @@
-
+import './RecipeItem.css';
 
 function RecipeItem(props) {
     
@@ -7,9 +7,19 @@ function RecipeItem(props) {
 
     return (
       
-        <div>  
-            {id} - {recipeName}
-            <button onClick={() =>props.onDelete(id)}>
+        <div className="item">  
+
+            <div className = "recipeID"> 
+                {id}:  
+            </div> 
+
+            <div className="recipeName"> 
+                <label className = "recipeText"> 
+                    {recipeName}
+                </label> 
+            </div> 
+                        
+            <button onClick={() =>props.onDelete(id)} className="deleteButton">
                 Delete            
             </button> 
         </div>

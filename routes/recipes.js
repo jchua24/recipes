@@ -3,9 +3,9 @@ const router = express.Router()
 
 
 //dictionary of recipe names - keys are id, values are recipe names
-const recipes = {0: "chocolate chip cookie", 1: "pepperoni pizza", 2: "caesar salad"};  
+const recipes = {1: "iced tea", 2: "pepperoni pizza", 3: "caesar salad"};  
 
-let id = 3; 
+let id = 4; 
 
 // get all recipes 
 router.get("/", async (req, res) => {
