@@ -19,10 +19,16 @@ export const apiGetRecipes = async () => {
 }
 
 
-export const apiAddRecipe = async (name) => {
+export const apiAddRecipe = async (name, ingredients) => {
+
+    const recipeBody = {
+        recipeName: name, 
+        ingredients: ingredients
+    } 
+
 
     try {    
-        const res = await axios.post('/recipes', {name});
+        const res = await axios.post('/recipes', recipeBody);
         
         if (!res || res.status != 200) {
           throw 'Unable to add recipe: ' + name;

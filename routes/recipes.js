@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router() 
 
 
-//dictionary of recipe names - keys are id, values are recipe names
-const recipes = {1: "iced tea", 2: "pepperoni pizza", 3: "caesar salad"};  
+//dictionary of recipe names - keys are recipe names, values are list of ingredients
+const recipes = {};  
 
-let id = 4; 
 
 // get all recipes 
 router.get("/", async (req, res) => {
@@ -16,13 +15,18 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
 
     //extract recipe name and store in dictionary
-    const recipeName = req.body.name; 
-    recipes[id] = recipeName; 
+    const recipeRequest = req.body; 
+    const recipeName = recipeRequest.recipeName; 
+    const ingredients = recipeRequest.ingredients; 
 
-    //increment id for future inserts
-    id += 1;
+   
+    //check if recipe already stored, and add if not present
+    if(!(recipeName in recipes)) {
+        recipes[recipeName] = ingredients; 
+        return res.sendStatus(200);
+    } 
 
-    return res.sendStatus(200);
+    return res.sendStatus(409); //recipe already exists
 
 }); 
 

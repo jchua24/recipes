@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {apiGetRecipes, apiAddRecipe, apiDeleteRecipe} from '../api/recipesAPI';
 import RecipeItem from "./RecipeItem";
 
+import RecipeEntry from "./RecipeEntry";
+import RecipeFilter from "./RecipeFilter";
+
 
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState({});
-    const [recipeName, setRecipeName] = useState("");
+   
 
     //load recipes on initial render 
     useEffect(() => {
         getRecipes();
+        console.log("retrieved recipes: " + JSON.stringify(recipes));
     }, []); 
  
     //api call to get all recipes
@@ -19,19 +23,18 @@ export default function Recipes() {
             const res  = await apiGetRecipes(); 
             setRecipes(res);
 
-            console.log("retrieved recipes: " + recipes);
+           
         } catch(err) {
             console.log(err); 
         }
     };
 
     //make api call to insert recipe 
-    const addRecipe = async () => {
+    const addRecipe = async (recipeName, ingredients) => {
         try {   
-            await apiAddRecipe(recipeName); 
+            await apiAddRecipe(recipeName, ingredients); 
             console.log("successfully added recipe: " + recipeName);
             
-            setRecipeName("");
             getRecipes(); 
         } catch(err) {
             console.log(err); 
@@ -49,20 +52,18 @@ export default function Recipes() {
         } 
     };
 
-    //handle text input for recipe name
-    const handleChange = (event) => {
-        setRecipeName(event.target.value);
-    }
 
     return (
         <div>
-            {Object.entries(recipes).map( ([key, value]) => <RecipeItem id={key} name={value} onDelete={deleteRecipe} ></RecipeItem> )}
+            {Object.entries(recipes).map( ([key, value]) => <RecipeItem key={key} name={key} ingredients={value} onDelete={deleteRecipe} ></RecipeItem> )}
 
-            <input placeholder="Recipe name..." value={recipeName} onChange={handleChange}/>  
+            <RecipeEntry addRecipe={addRecipe}> </RecipeEntry>
 
-            <button onClick={addRecipe} disabled={recipeName.length == 0}>
-                Add Recipe
-            </button>
+            <RecipeFilter recipes={recipes}> </RecipeFilter>
+
+
+
+
         </div>
     );
 }

@@ -16,9 +16,6 @@ app.use(express.urlencoded({limit: '50mb', extended: true}))
 //serve static files with proxy
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 
 app.use(router);

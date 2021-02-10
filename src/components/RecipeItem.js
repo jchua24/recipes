@@ -2,24 +2,24 @@ import './RecipeItem.css';
 
 function RecipeItem(props) {
     
-    const id = props.id;
-    const recipeName = props.name;
+    const name = props.name;
+    const ingredients = props.ingredients;
 
     return (
       
         <div className="item">  
 
             <div className = "recipeID"> 
-                {id}:  
+                {name}:  
             </div> 
 
             <div className="recipeName"> 
                 <label className = "recipeText"> 
-                    {recipeName}
+                    {ingredients.join(", ")}
                 </label> 
             </div> 
                         
-            <button onClick={() =>props.onDelete(id)} className="deleteButton">
+            <button onClick={() =>props.onDelete(name)} className="deleteButton">
                 Delete            
             </button> 
         </div>
